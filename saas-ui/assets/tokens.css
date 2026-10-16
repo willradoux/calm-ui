@@ -1,0 +1,134 @@
+/* Original proposal for adaptation; not an official design system of the references.
+   Import after reconciling names with the project. No external font is loaded.
+   Opt-in dark theme: <html data-theme="dark">.
+   Tokens do not guarantee accessibility without implementing and testing the components. */
+:root {
+  color-scheme: light;
+  --saas-font-ui: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --saas-font-display: var(--saas-font-ui);
+  --saas-font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+
+  --saas-bg: #f6f7f4;
+  --saas-surface: #ffffff;
+  --saas-surface-muted: #edf1ed;
+  --saas-text: #20272a;
+  --saas-text-secondary: #4c5267;
+  --saas-heading: #244c4e;
+  --saas-link: #28624e;
+  --saas-link-hover: #204749;
+  --saas-action: #9eea6c;
+  --saas-action-hover: #8bd65a;
+  --saas-on-action: #244c4e;
+  --saas-action-strong: #244c4e;
+  --saas-on-action-strong: #ffffff;
+  --saas-border-subtle: #d8dfd8; /* decorative separators, not the only boundary of a field */
+  --saas-border-control: #737f77;
+  --saas-focus: #0066cc;
+  --saas-focus-gap: var(--saas-surface);
+
+  --saas-success: #236343;
+  --saas-success-bg: #e7f5ec;
+  --saas-warning: #76500c;
+  --saas-warning-bg: #fff2d6;
+  --saas-danger: #a52332;
+  --saas-danger-bg: #fff0f1;
+  --saas-info: #245ba2;
+  --saas-info-bg: #edf4ff;
+
+  --saas-space-1: 0.25rem;
+  --saas-space-2: 0.5rem;
+  --saas-space-3: 0.75rem;
+  --saas-space-4: 1rem;
+  --saas-space-6: 1.5rem;
+  --saas-space-8: 2rem;
+  --saas-space-12: 3rem;
+  --saas-space-16: 4rem;
+  --saas-space-24: 6rem;
+
+  --saas-radius-control: 0.625rem;
+  --saas-radius-card: 1.125rem;
+  --saas-radius-panel: 1.625rem;
+  --saas-radius-pill: 9999px;
+  --saas-shadow-card: 0 2px 5px rgb(20 35 27 / 0.035), 0 12px 32px rgb(20 35 27 / 0.06);
+  --saas-shadow-overlay: 0 4px 12px rgb(20 35 27 / 0.08), 0 24px 64px rgb(20 35 27 / 0.14);
+
+  --saas-text-small: 0.875rem;
+  --saas-text-body: 1rem;
+  --saas-text-lead: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --saas-text-page-title: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  --saas-text-section-title: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+  --saas-text-hero: clamp(2.25rem, 1.25rem + 4vw, 4.5rem);
+  --saas-leading-body: 1.55;
+  --saas-leading-heading: 1.08;
+  --saas-tracking-heading: -0.025em;
+  --saas-content-max: 75rem;
+  --saas-reading-max: 68ch;
+  --saas-gutter: clamp(1.25rem, 4vw, 3rem);
+  --saas-target-comfort: 2.75rem;
+
+  --saas-duration-instant: 100ms;
+  --saas-duration-fast: 140ms;
+  --saas-duration-base: 220ms;
+  --saas-duration-slow: 320ms;
+  --saas-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --saas-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --saas-motion-distance: 0.5rem;
+  --saas-z-dropdown: 10;
+  --saas-z-sticky: 20;
+  --saas-z-overlay: 40;
+  --saas-z-toast: 50;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --saas-bg: #111815;
+  --saas-surface: #18221d;
+  --saas-surface-muted: #24312a;
+  --saas-text: #eef3ee;
+  --saas-text-secondary: #b9c4bd;
+  --saas-heading: #edf6ef;
+  --saas-link: #a5e38e;
+  --saas-link-hover: #c1f5ae;
+  --saas-action: #9eea6c;
+  --saas-action-hover: #b0f385;
+  --saas-on-action: #244c4e;
+  --saas-action-strong: #dcebdd;
+  --saas-on-action-strong: #18221d;
+  --saas-border-subtle: #35473c;
+  --saas-border-control: #809788;
+  --saas-focus: #9bc5ff;
+  --saas-success: #9ee1b7;
+  --saas-success-bg: #163924;
+  --saas-warning: #f2cf84;
+  --saas-warning-bg: #3e3118;
+  --saas-danger: #ffb1bb;
+  --saas-danger-bg: #442129;
+  --saas-info: #acd0ff;
+  --saas-info-bg: #1c304b;
+  --saas-shadow-card: 0 2px 5px rgb(0 0 0 / 0.1), 0 12px 32px rgb(0 0 0 / 0.18);
+  --saas-shadow-overlay: 0 4px 12px rgb(0 0 0 / 0.18), 0 24px 64px rgb(0 0 0 / 0.3);
+}
+
+/* Only consumers of these tokens are affected.
+   Do not use transitions to drive logic; 0ms may not fire transitionend.
+   JS must query matchMedia; loops/videos need their own controls. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --saas-duration-instant: 0ms;
+    --saas-duration-fast: 0ms;
+    --saas-duration-base: 0ms;
+    --saas-duration-slow: 0ms;
+    --saas-motion-distance: 0rem;
+  }
+}
+
+/* Opt-in focus example. Check contrast against all adjacent surfaces. */
+.saas-focus:focus-visible {
+  outline: 3px solid var(--saas-focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--saas-focus-gap);
+}
+
+.saas-numeric {
+  font-variant-numeric: tabular-nums;
+}
